@@ -1,0 +1,25 @@
+CREATE TABLE public.empresa (
+	id_empresa int4 DEFAULT nextval('empresa_id_seq'::regclass) NOT NULL,
+	razao_social varchar(50) NOT NULL,
+	nome_fantasia varchar(50) NULL,
+	cnpj varchar(14) NOT NULL,
+	CONSTRAINT empresa_pk PRIMARY KEY (id_empresa)
+);
+
+
+CREATE TABLE public.setor (
+	id_setor int4 DEFAULT nextval('setor_id_seq'::regclass) NOT NULL,
+	descricao varchar(50) NOT NULL,
+	CONSTRAINT setor_pk PRIMARY KEY (id_setor)
+);
+
+CREATE TABLE public.empresa_setor (
+	empresa_id serial4 NOT NULL,
+	setor_id serial4 NOT NULL
+);
+
+
+-- public.empresa_setor chaves estrangeiras
+
+ALTER TABLE public.empresa_setor ADD CONSTRAINT empresa_id FOREIGN KEY (empresa_id) REFERENCES public.empresa(id_empresa) ON DELETE CASCADE;
+ALTER TABLE public.empresa_setor ADD CONSTRAINT setor_id FOREIGN KEY (setor_id) REFERENCES public.setor(id_setor);
